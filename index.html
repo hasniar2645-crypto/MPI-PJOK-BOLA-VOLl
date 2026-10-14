@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+<title>MPI PJOK Kelas VII — Jelajah Bola Voli</title>
+<style>
+:root{--ink:#17324d;--muted:#5b6b7d;--teal:#0f766e;--teal2:#14b8a6;--orange:#f59e0b;--paper:#f4f8fb;--white:#fff;--line:#dce6ee;--good:#dcfce7;--bad:#fee2e2}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{background:linear-gradient(120deg,#064e3b,#0f766e 60%,#0ea5a4);color:#fff;padding:22px 18px 28px}
+.topinner{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}.ball{font-size:42px;background:#ffffff22;border:1px solid #ffffff44;border-radius:18px;width:68px;height:68px;display:grid;place-items:center}
+.eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;opacity:.85}.topbar h1{margin:2px 0;font-size:clamp(1.45rem,4vw,2.25rem);line-height:1.15}.topbar p{margin:4px 0 0;opacity:.92}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px 40px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:-16px;position:relative}
+.navbtn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:10px 14px;border-radius:12px;font-weight:700;box-shadow:0 3px 10px #0b253b0c}.navbtn.active,.navbtn:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+main{padding-top:22px}.screen{display:none;animation:fade .22s ease}.screen.active{display:block}@keyframes fade{from{opacity:.35;transform:translateY(4px)}to{opacity:1;transform:none}}
+.hero{background:linear-gradient(130deg,#e0f2fe,#ccfbf1);border:1px solid #b7e7df;border-radius:24px;padding:clamp(22px,4vw,42px);display:grid;grid-template-columns:1.4fr .8fr;gap:20px;align-items:center}
+.hero h2{font-size:clamp(1.6rem,4vw,2.5rem);line-height:1.15;margin:8px 0 12px}.hero p{color:#38546a;max-width:650px}
+.hero-art{font-size:clamp(90px,14vw,160px);text-align:center;filter:drop-shadow(0 12px 8px #0f766e22)}
+.pill{display:inline-block;padding:5px 10px;background:#fff;border-radius:999px;color:var(--teal);font-weight:800;font-size:.78rem;border:1px solid #b7e7df}
+.btn{border:0;border-radius:12px;padding:11px 16px;background:var(--teal);color:#fff;font-weight:800;box-shadow:0 4px 0 #075e54;transition:.12s}.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}.btn.secondary{background:#e2e8f0;color:var(--ink);box-shadow:0 4px 0 #cbd5e1}.btn.orange{background:#d97706;box-shadow:0 4px 0 #92400e}.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:8px 0 16px}.sectionhead h2{margin:0;font-size:1.65rem}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 18px #0b253b08}.card h3{margin:6px 0 8px}.card p{margin:6px 0;color:#536779}.cardicon{font-size:32px}.card button{margin-top:12px}
+.notice{border-left:4px solid var(--orange);background:#fffbeb;padding:14px 16px;border-radius:10px;color:#713f12;margin:14px 0}
+.question{padding:18px;background:#fff;border:1px solid var(--line);border-radius:16px;margin:12px 0}.question h3{margin:0 0 10px;font-size:1.05rem}.options{display:grid;gap:8px}.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);padding:10px 12px;border-radius:11px;background:#fbfdff}.opt:hover{border-color:#5eead4}.opt input{margin-top:5px;accent-color:var(--teal)}
+.feedback{margin-top:10px;padding:10px 12px;border-radius:10px;font-weight:650}.correct{background:var(--good);color:#166534}.incorrect{background:var(--bad);color:#991b1b}
+.progress{height:10px;border-radius:99px;background:#e2e8f0;overflow:hidden;min-width:120px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal2));width:0;transition:width .2s}
+.step{display:flex;gap:12px;align-items:flex-start;margin:12px 0}.stepnum{flex:0 0 34px;height:34px;border-radius:50%;background:#ccfbf1;color:#115e59;display:grid;place-items:center;font-weight:900}
+.visual{background:linear-gradient(135deg,#eff6ff,#ccfbf1);border:1px solid #c7e8e7;border-radius:16px;padding:20px;text-align:center;font-size:clamp(42px,7vw,72px)}
+.field{display:grid;gap:6px;margin:10px 0}.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;background:white;color:var(--ink)}
+.resultbig{font-size:2.8rem;font-weight:900;color:var(--teal);line-height:1.1}
+footer{text-align:center;padding:20px;color:#607386;font-size:.9rem}
+.small{font-size:.88rem}.hidden{display:none!important}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.hero-art{grid-row:1}.grid,.grid.two{grid-template-columns:1fr}.toolbar{margin-top:-12px}.navbtn{flex:1;min-width:100px}}
+@media print{.topbar,.toolbar,.noprint,footer{display:none!important}.screen{display:none!important}.screen.active{display:block!important}.wrap{max-width:none;padding:0}.card,.question{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topinner">
+    <div class="brand"><div class="ball" aria-hidden="true">🏐</div><div><div class="eyebrow">Media Pembelajaran Interaktif · PJOK Kelas VII</div><h1>Jelajah Teknik Dasar Bola Voli</h1><p>Kurikulum Merdeka · Fase D</p></div></div>
+    <div><div class="eyebrow">Dikembangkan oleh</div><strong>HASNIAR, S.Pd.</strong><div class="small">SMP Negeri 8 Kolaka Utara</div></div>
+  </div>
+</header>
+<div class="wrap">
+<nav class="toolbar noprint" aria-label="Navigasi utama">
+<button class="navbtn active" data-go="beranda">🏠 Beranda</button>
+<button class="navbtn" data-go="apersepsi">💡 Apersepsi</button>
+<button class="navbtn" data-go="awal">📝 Asesmen Awal</button>
+<button class="navbtn" data-go="materi">📚 Materi</button>
+<button class="navbtn" data-go="lab">🎮 Lab Virtual</button>
+<button class="navbtn" data-go="kuis">❓ Kuis</button>
+<button class="navbtn" data-go="akhir">🎯 Asesmen Akhir</button>
+<button class="navbtn" data-go="refleksi">🌱 Refleksi</button>
+</nav>
+<main>
+<section id="beranda" class="screen active">
+<div class="hero"><div><span class="pill">Ayo bergerak, belajar, dan berpikir!</span><h2>Kenali tekniknya.<br>Praktikkan dengan aman.</h2><p>Pelajari empat teknik dasar bola voli melalui materi ringkas, latihan situasi, kuis interaktif, dan refleksi. Mulai dari pengetahuan awalmu, lalu lihat perkembangan belajarmu.</p><div class="row"><button class="btn" data-go="apersepsi">Mulai belajar →</button><button class="btn secondary" data-go="materi">Lihat materi</button></div></div><div class="hero-art" aria-hidden="true">🏐</div></div>
+<div class="sectionhead"><h2>Rute belajar</h2><span class="muted small">Progres tersimpan di perangkat ini</span></div>
+<div class="grid">
+<div class="card"><div class="cardicon">🙋</div><h3>1. Bangun rasa ingin tahu</h3><p>Apersepsi dan asesmen awal menghubungkan pengalamanmu dengan materi.</p><button class="btn secondary" data-go="awal">Mulai asesmen awal</button></div>
+<div class="card"><div class="cardicon">📖</div><h3>2. Pelajari teknik</h3><p>Kenali servis, passing bawah, smash, dan blocking beserta prinsip keselamatannya.</p><button class="btn secondary" data-go="materi">Buka materi</button></div>
+<div class="card"><div class="cardicon">🏆</div><h3>3. Uji pemahaman</h3><p>Latih keputusan dalam situasi permainan, kerjakan kuis, lalu refleksikan hasilnya.</p><button class="btn secondary" data-go="lab">Coba simulasi</button></div>
+</div>
+<div class="card" style="margin-top:14px"><div class="row" style="justify-content:space-between"><strong>Progres belajarmu</strong><span id="progressText" class="muted small">0 dari 5 kegiatan</span></div><div class="progress" style="margin-top:10px"><span id="progressBar"></span></div><p class="small muted">Kegiatan: apersepsi, asesmen awal, materi, lab virtual, kuis/asesmen akhir, refleksi.</p></div>
+</section>
+
+<section id="apersepsi" class="screen">
+<div class="sectionhead"><div><span class="pill">Tahap 1</span><h2>Apersepsi: Bola datang ke arahmu!</h2></div></div>
+<div class="grid two"><div class="visual" aria-hidden="true">🏐 ↗️ 🧍</div><div class="card"><h3>Bayangkan situasi ini</h3><p>Dalam permainan bola voli, bola meluncur rendah ke arahmu. Tim berharap kamu bisa menjaga bola tetap hidup.</p><p><strong>Pertanyaan pemantik:</strong> Apa yang akan kamu lakukan agar bola dapat diterima dengan baik dan temanmu tetap aman?</p><div class="field"><label for="apAnswer">Tuliskan ide awalmu</label><textarea id="apAnswer" rows="3" placeholder="Menurut saya, saya akan..."></textarea></div><button class="btn" id="saveApersepsi">Simpan jawaban</button><div id="apFeedback" aria-live="polite"></div></div></div>
+<div class="notice">Tidak harus langsung benar. Gunakan pengalaman bermain atau mengamati pertandingan untuk menyampaikan dugaanmu.</div>
+</section>
+
+<section id="awal" class="screen">
+<div class="sectionhead"><div><span class="pill">Tahap 2</span><h2>Asesmen Awal</h2><p class="muted">Pilih jawaban yang paling tepat. Hasil ini untuk mengetahui pengetahuan awal, bukan nilai akhir.</p></div></div>
+<form id="formAwal">
+<div class="question"><h3>1. Teknik untuk memulai reli/permainan adalah…</h3><div class="options">
+<label class="opt"><input type="radio" name="a1" value="a" required> Passing bawah</label><label class="opt"><input type="radio" name="a1" value="b"> Servis</label><label class="opt"><input type="radio" name="a1" value="c"> Blocking</label></div></div>
+<div class="question"><h3>2. Saat bola datang rendah, teknik yang sering digunakan untuk menerima bola adalah…</h3><div class="options"><label class="opt"><input type="radio" name="a2" value="a" required> Passing bawah</label><label class="opt"><input type="radio" name="a2" value="b"> Smash</label><label class="opt"><input type="radio" name="a2" value="c"> Servis atas</label></div></div>
+<div class="question"><h3>3. Apa yang paling penting saat berlatih bersama teman?</h3><div class="options"><label class="opt"><input type="radio" name="a3" value="a" required> Mengutamakan kemenangan saja</label><label class="opt"><input type="radio" name="a3" value="b"> Saling berkomunikasi dan menjaga keselamatan</label><label class="opt"><input type="radio" name="a3" value="c"> Mengabaikan instruksi</label></div></div>
+<button class="btn" type="submit">Periksa jawaban</button> <button class="btn secondary" type="reset" id="resetAwal">Ulangi</button>
+</form><div id="awalResult" aria-live="polite"></div>
+</section>
+
+<section id="materi" class="screen">
+<div class="sectionhead"><div><span class="pill">Tahap 3</span><h2>Materi Pokok: Empat Teknik Dasar</h2><p class="muted">Pilih kartu untuk melihat langkah kunci dan tips keselamatan.</p></div></div>
+<div class="grid">
+<div class="card"><div class="cardicon">🎯</div><h3>Servis</h3><p>Memulai permainan dengan memukul bola melewati net ke area lawan.</p><button class="btn secondary" data-tech="servis">Pelajari langkah</button></div>
+<div class="card"><div class="cardicon">🤲</div><h3>Passing bawah</h3><p>Menerima atau mengoper bola rendah menggunakan kedua lengan bagian bawah.</p><button class="btn secondary" data-tech="passing">Pelajari langkah</button></div>
+<div class="card"><div class="cardicon">💥</div><h3>Smash</h3><p>Serangan dengan pukulan kuat dan terarah setelah bola diumpan.</p><button class="btn secondary" data-tech="smash">Pelajari langkah</button></div>
+<div class="card"><div class="cardicon">🖐️</div><h3>Blocking</h3><p>Membendung serangan lawan di dekat net dengan kedua tangan.</p><button class="btn secondary" data-tech="blocking">Pelajari langkah</button></div>
+<div class="card"><div class="cardicon">🛡️</div><h3>Keselamatan dan sportivitas</h3><p>Lakukan pemanasan, gunakan area latihan yang aman, dengarkan instruksi, dan komunikasikan posisi.</p><button class="btn secondary" data-tech="aman">Lihat tips</button></div>
+<div class="card"><div class="cardicon">🧠</div><h3>Ingat konsep</h3><p>Pilih teknik berdasarkan arah, tinggi, dan situasi bola—bukan sekadar menghafal nama.</p><button class="btn secondary" data-go="lab">Latihan keputusan</button></div>
+</div>
+<div id="techDetail" class="card hidden" style="margin-top:16px" aria-live="polite"><div class="row" style="justify-content:space-between"><h3 id="techTitle">Teknik</h3><button class="btn secondary" id="closeTech">Tutup</button></div><div id="techBody"></div><button class="btn" id="markMateri">Tandai materi selesai ✓</button></div>
+</section>
+
+<section id="lab" class="screen">
+<div class="sectionhead"><div><span class="pill">Tahap 4</span><h2>Laboratorium Virtual</h2><p class="muted">Amati situasi permainan, lalu pilih tindakan yang paling tepat.</p></div><div class="row"><span id="labCounter" class="muted small">Situasi 1 dari 4</span><div class="progress"><span id="labProgress"></span></div></div></div>
+<div class="card"><div class="visual" id="labVisual" aria-hidden="true">🏐 ↘️</div><h3 id="labQuestion">Bola akan dimainkan pertama kali. Teknik apa yang tepat?</h3><div class="options" id="labOptions"></div><div id="labFeedback" aria-live="polite"></div><div class="row" style="margin-top:14px"><button class="btn" id="checkLab">Periksa pilihan</button><button class="btn secondary" id="nextLab" disabled>Situasi berikutnya →</button><button class="btn secondary" id="restartLab">Ulangi simulasi</button></div></div>
+<div class="notice"><strong>Tantangan berpikir kritis:</strong> Dua pemain berlari mengejar bola rendah yang sama. Teknik apa yang dibutuhkan, dan bagaimana mereka menghindari tabrakan? Jawaban yang baik mencakup passing bawah, komunikasi (“saya ambil!”), serta menjaga jarak dan keseimbangan.</div>
+</section>
+
+<section id="kuis" class="screen">
+<div class="sectionhead"><div><span class="pill">Tahap 5</span><h2>Kuis Interaktif</h2><p class="muted">3 soal · skor maksimal 100. Jawaban diperiksa di perangkat ini.</p></div><div class="card" style="padding:12px 16px"><span class="muted small">Skor terakhir</span><div id="lastScore" class="resultbig" style="font-size:1.8rem">—</div></div></div>
+<form id="formKuis">
+<div class="question"><h3>1. Teknik apakah yang digunakan untuk memulai reli? (30 poin)</h3><div class="options"><label class="opt"><input type="radio" name="q1" value="a" required> Blocking</label><label class="opt"><input type="radio" name="q1" value="b"> Servis</label><label class="opt"><input type="radio" name="q1" value="c"> Smash</label></div></div>
+<div class="question"><h3>2. Bola datang rendah di depan tubuh. Teknik yang paling sesuai untuk menerima bola adalah… (30 poin)</h3><div class="options"><label class="opt"><input type="radio" name="q2" value="a" required> Passing bawah</label><label class="opt"><input type="radio" name="q2" value="b"> Smash</label><label class="opt"><input type="radio" name="q2" value="c"> Blocking</label></div></div>
+<div class="question"><h3>3. Pasangkan teknik dengan fungsi yang tepat. (40 poin)</h3>
+<div class="field"><label for="match1">Servis</label><select id="match1" required><option value="">Pilih fungsi…</option><option value="start">Memulai reli</option><option value="receive">Menerima bola rendah</option><option value="attack">Menyerang dengan pukulan</option><option value="block">Membendung serangan</option></select></div>
+<div class="field"><label for="match2">Passing bawah</label><select id="match2" required><option value="">Pilih fungsi…</option><option value="start">Memulai reli</option><option value="receive">Menerima bola rendah</option><option value="attack">Menyerang dengan pukulan</option><option value="block">Membendung serangan</option></select></div>
+<div class="field"><label for="match3">Smash</label><select id="match3" required><option value="">Pilih fungsi…</option><option value="start">Memulai reli</option><option value="receive">Menerima bola rendah</option><option value="attack">Menyerang dengan pukulan</option><option value="block">Membendung serangan</option></select></div>
+<div class="field"><label for="match4">Blocking</label><select id="match4" required><option value="">Pilih fungsi…</option><option value="start">Memulai reli</option><option value="receive">Menerima bola rendah</option><option value="attack">Menyerang dengan pukulan</option><option value="block">Membendung serangan</option></select></div></div>
+<button class="btn" type="submit">Kirim kuis & lihat skor</button> <button class="btn secondary" type="reset">Ulangi kuis</button>
+</form><div id="quizResult" aria-live="polite"></div>
+</section>
+
+<section id="akhir" class="screen">
+<div class="sectionhead"><div><span class="pill">Tahap 6</span><h2>Asesmen Akhir</h2><p class="muted">Gunakan pemahamanmu untuk memilih solusi dalam situasi permainan.</p></div></div>
+<form id="formAkhir">
+<div class="question"><h3>1. Tim lawan bersiap melakukan smash. Apa tindakan pemain dekat net yang paling sesuai?</h3><div class="options"><label class="opt"><input type="radio" name="f1" value="a" required> Membelakangi net</label><label class="opt"><input type="radio" name="f1" value="b"> Melakukan blocking dengan posisi siap dan aman</label><label class="opt"><input type="radio" name="f1" value="c"> Berlari tanpa memperhatikan rekan</label></div></div>
+<div class="question"><h3>2. Saat menerima servis, dua teman mengejar bola yang sama. Apa pilihan terbaik?</h3><div class="options"><label class="opt"><input type="radio" name="f2" value="a" required> Berteriak saling menyalahkan</label><label class="opt"><input type="radio" name="f2" value="b"> Berkomunikasi, menentukan siapa mengambil bola, dan menjaga jarak</label><label class="opt"><input type="radio" name="f2" value="c"> Menutup mata</label></div></div>
+<div class="question"><h3>3. Mengapa pemanasan dan penggunaan teknik yang benar penting?</h3><div class="options"><label class="opt"><input type="radio" name="f3" value="a" required> Untuk mengurangi risiko cedera dan meningkatkan kesiapan tubuh</label><label class="opt"><input type="radio" name="f3" value="b"> Agar latihan cepat selesai tanpa arahan</label><label class="opt"><input type="radio" name="f3" value="c"> Tidak ada manfaatnya</label></div></div>
+<button class="btn" type="submit">Nilai asesmen akhir</button>
+</form><div id="finalResult" aria-live="polite"></div>
+</section>
+
+<section id="refleksi" class="screen">
+<div class="sectionhead"><div><span class="pill">Tahap 7</span><h2>Refleksi dan Rencana Latihan</h2><p class="muted">Jujurlah pada dirimu. Refleksi membantu menentukan langkah berikutnya.</p></div></div>
+<div class="grid two"><div class="card"><h3>Renungkan pengalaman belajar</h3>
+<div class="field"><label for="reflect1">1. Teknik yang paling saya pahami adalah…</label><input id="reflect1" placeholder="Contoh: passing bawah"></div>
+<div class="field"><label for="reflect2">2. Teknik yang masih perlu saya latih adalah…</label><input id="reflect2" placeholder="Tuliskan teknik"></div>
+<div class="field"><label for="reflect3">3. Satu hal yang akan saya lakukan agar latihan aman adalah…</label><textarea id="reflect3" rows="3" placeholder="Saya akan..."></textarea></div>
+<div class="field"><label for="reflect4">Seberapa percaya diri kamu sekarang?</label><select id="reflect4"><option value="">Pilih…</option><option>Sangat percaya diri</option><option>Cukup percaya diri</option><option>Masih perlu bantuan</option></select></div>
+<button class="btn" id="saveReflection">Simpan refleksi</button><div id="reflectionFeedback" aria-live="polite"></div></div>
+<div class="card"><div class="cardicon">🌱</div><h3>Langkah berikutnya</h3><p>Berlatihlah bertahap dengan pendampingan guru. Mulai dari sikap dasar dan kontrol bola, kemudian tingkatkan koordinasi bersama teman.</p><ul><li>Lakukan pemanasan sebelum latihan.</li><li>Gunakan bola dan lapangan yang sesuai.</li><li>Berkomunikasi dan bergiliran.</li><li>Hormati teman, lawan, dan keputusan wasit.</li></ul><button class="btn secondary" id="printReport">Cetak ringkasan / Simpan PDF</button><button class="btn secondary" id="resetAll" style="margin-left:6px">Reset progres</button></div></div>
+</section>
+</main>
+<footer>MPI PJOK Kelas VII · Bola Voli · HASNIAR, S.Pd. · SMP Negeri 8 Kolaka Utara<br><span class="small">Aplikasi mandiri/offline. Tidak mengirim data ke internet.</span></footer>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const state={visited:JSON.parse(localStorage.getItem('mpiVisited')||'{}'),lastScore:localStorage.getItem('mpiLastScore')||'',quizScore:localStorage.getItem('mpiQuizScore')||'',materiDone:localStorage.getItem('mpiMateriDone')==='true',labDone:localStorage.getItem('mpiLabDone')==='true'};
+function saveState(){localStorage.setItem('mpiVisited',JSON.stringify(state.visited));localStorage.setItem('mpiMateriDone',String(state.materiDone));localStorage.setItem('mpiLabDone',String(state.labDone));updateProgress()}
+function go(id){$$('.screen').forEach(x=>x.classList.toggle('active',x.id===id));$$('.navbtn').forEach(x=>x.classList.toggle('active',x.dataset.go===id));if(id!=='beranda'){state.visited[id]=true;saveState()}window.scrollTo({top:0,behavior:'smooth'});if(id==='kuis')$('#lastScore').textContent=state.quizScore===''?'—':state.quizScore}
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+function updateProgress(){const count=['apersepsi','awal','materi','lab','kuis','akhir','refleksi'].filter(k=>state.visited[k]||(k==='materi'&&state.materiDone)||(k==='lab'&&state.labDone)).length;$('#progressText').textContent=count+' dari 7 kegiatan';$('#progressBar').style.width=(count/7*100)+'%'}
+$('#saveApersepsi').onclick=()=>{const v=$('#apAnswer').value.trim();if(!v){$('#apFeedback').innerHTML='<div class="feedback incorrect">Tuliskan ide terlebih dahulu.</div>';return}localStorage.setItem('mpiApersepsi',v);state.visited.apersepsi=true;saveState();$('#apFeedback').innerHTML='<div class="feedback correct">Jawaban tersimpan. Bagus, kamu sudah mulai berpikir seperti pemain yang cermat!</div>'};
+const awalKey={a1:'b',a2:'a',a3:'b'};
+$('#formAwal').addEventListener('submit',e=>{e.preventDefault();let score=0;Object.entries(awalKey).forEach(([k,v])=>{if(new FormData(e.target).get(k)===v)score++});localStorage.setItem('mpiAwalScore',score);state.visited.awal=true;saveState();$('#awalResult').innerHTML=`<div class="card" style="margin-top:14px"><h3>Hasil asesmen awal</h3><div class="resultbig">${score}/3</div><p>${score===3?'Kamu sudah memiliki bekal awal yang baik.':score===2?'Awal yang baik. Pelajari kembali teknik yang belum kamu kuasai.':'Tidak apa-apa—gunakan materi untuk memperkuat pemahamanmu.'}</p><button class="btn" onclick="go('materi')">Lanjut ke materi →</button></div>`});
+const techs={
+servis:{title:'Servis',icon:'🎯',steps:['Berdiri seimbang di belakang garis akhir sesuai aturan latihan.','Pegang bola di depan tubuh dan fokus pada sasaran.','Ayunkan tangan untuk memukul bola melewati net.','Lanjutkan dengan siap bergerak ke posisi permainan.'],tip:'Mulai dari servis bawah dengan jarak dekat bila masih belajar. Jangan mengayun ketika orang berada terlalu dekat.'},
+passing:{title:'Passing bawah',icon:'🤲',steps:['Buka kaki selebar bahu dan tekuk lutut.','Rapatkan kedua tangan; luruskan lengan dan bentuk bidang pantul.','Arahkan bidang lengan ke bola dan dorong dari kaki, bukan mengayun liar.','Arahkan bola kepada pengumpan atau rekan yang siap.'],tip:'Jangan mengunci lutut atau memukul bola dengan pergelangan tangan. Panggil bola dan perhatikan posisi teman.'},
+smash:{title:'Smash',icon:'💥',steps:['Amati umpan dan atur langkah awalan sesuai kemampuan.','Lakukan tolakan dengan pendaratan yang terkendali.','Ayunkan lengan dan sentuh bola di titik yang nyaman di depan tubuh.','Mendarat dengan lutut lentur dan jaga ruang dari pemain lain.'],tip:'Latihan lompatan dan pukulan dilakukan bertahap di bawah arahan guru. Jangan menyentuh net atau mendarat di kaki teman.'},
+blocking:{title:'Blocking',icon:'🖐️',steps:['Amati arah umpan dan penyerang lawan.','Ambil posisi seimbang di dekat net dengan lutut sedikit ditekuk.','Lompat vertikal dan rentangkan kedua tangan ke atas melewati bidang net tanpa menyentuh net.','Mendarat dengan kedua kaki terkontrol dan segera bersiap kembali.'],tip:'Jaga jarak antarpemain, jangan mendorong lawan, dan hindari menyentuh net.'},
+aman:{title:'Keselamatan dan sportivitas',icon:'🛡️',steps:['Lakukan pemanasan dan periksa lapangan serta perlengkapan.','Ikuti instruksi guru dan tingkatkan latihan secara bertahap.','Berkomunikasi, bergiliran, dan beri ruang gerak kepada teman.','Hargai perbedaan kemampuan, keputusan wasit, dan hasil permainan.'],tip:'Hentikan latihan dan beri tahu guru bila merasa sakit atau melihat kondisi yang berbahaya.'}
+};
+let currentTech='';
+$$('[data-tech]').forEach(b=>b.onclick=()=>{currentTech=b.dataset.tech;const t=techs[currentTech];$('#techTitle').textContent=t.icon+' '+t.title;$('#techBody').innerHTML='<div class="step"><div><strong>Langkah kunci</strong>'+t.steps.map((s,i)=>`<div class="step"><div class="stepnum">${i+1}</div><div>${s}</div></div>`).join('')+'<div class="notice"><strong>Tips keselamatan:</strong> '+t.tip+'</div></div></div>';$('#techDetail').classList.remove('hidden');$('#techDetail').scrollIntoView({behavior:'smooth',block:'start'})});
+$('#closeTech').onclick=()=>$('#techDetail').classList.add('hidden');
+$('#markMateri').onclick=()=>{state.materiDone=true;state.visited.materi=true;saveState();$('#markMateri').textContent='Materi ditandai selesai ✓';$('#markMateri').disabled=true};
+const scenarios=[
+{icon:'🏐 🎯',q:'Bola akan dimainkan pertama kali untuk memulai reli. Teknik apa yang tepat?',opts:['Servis','Passing bawah','Blocking'],a:0,why:'Servis digunakan untuk memulai reli.'},
+{icon:'🏐 ↘️ 🤲',q:'Bola datang rendah menuju area depanmu. Apa tindakan paling tepat?',opts:['Smash','Passing bawah','Blocking'],a:1,why:'Passing bawah membantu menerima dan mengarahkan bola rendah.'},
+{icon:'🏐 ⬆️ 💥',q:'Bola diumpan dekat net dan kamu memiliki kesempatan menyerang. Teknik apa yang digunakan?',opts:['Smash','Servis','Passing bawah'],a:0,why:'Smash adalah pukulan serangan; lakukan dengan teknik dan pendaratan yang aman.'},
+{icon:'🧍 🖐️ 🏐',q:'Lawan melakukan serangan di dekat net. Apa yang dapat dilakukan pemain depan?',opts:['Blocking','Servis','Membelakangi bola'],a:0,why:'Blocking berupaya membendung serangan lawan di dekat net.'}
+];let labIndex=0,labAnswer=null,labCorrect=0,labChecked=false;
+function renderLab(){const s=scenarios[labIndex];labAnswer=null;labChecked=false;$('#labVisual').textContent=s.icon;$('#labQuestion').textContent=s.q;$('#labCounter').textContent=`Situasi ${labIndex+1} dari ${scenarios.length}`;$('#labProgress').style.width=((labIndex)/scenarios.length*100)+'%';$('#labFeedback').innerHTML='';$('#checkLab').disabled=false;$('#nextLab').disabled=true;$('#nextLab').textContent=labIndex===scenarios.length-1?'Selesai simulasi ✓':'Situasi berikutnya →';$('#labOptions').innerHTML=s.opts.map((o,i)=>`<label class="opt"><input type="radio" name="labopt" value="${i}"> ${o}</label>`).join('');$$('input[name="labopt"]').forEach(x=>x.onchange=()=>{labAnswer=Number(x.value)})}
+$('#checkLab').onclick=()=>{if(labAnswer===null){$('#labFeedback').innerHTML='<div class="feedback incorrect">Pilih satu jawaban terlebih dahulu.</div>';return}if(labChecked)return;labChecked=true;const s=scenarios[labIndex],ok=labAnswer===s.a;if(ok)labCorrect++;$('#labFeedback').innerHTML=`<div class="feedback ${ok?'correct':'incorrect'}">${ok?'Tepat!':'Belum tepat.'} ${s.why}</div>`;$('#checkLab').disabled=true;$('#nextLab').disabled=false};
+$('#nextLab').onclick=()=>{if(labIndex<scenarios.length-1){labIndex++;renderLab()}else{state.labDone=true;state.visited.lab=true;saveState();$('#labProgress').style.width='100%';$('#labFeedback').innerHTML=`<div class="card"><h3>Simulasi selesai!</h3><div class="resultbig">${labCorrect}/${scenarios.length}</div><p>${labCorrect===4?'Luar biasa! Semua keputusanmu tepat.':'Terus berlatih dan hubungkan situasi dengan fungsi setiap teknik.'}</p></div>`;$('#nextLab').disabled=true;$('#checkLab').disabled=true}};
+$('#restartLab').onclick=()=>{labIndex=0;labCorrect=0;renderLab()};renderLab();
+$('#formKuis').addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);let score=0;const q1=d.get('q1')==='b',q2=d.get('q2')==='a';if(q1)score+=30;if(q2)score+=30;const pairs=[['match1','start'],['match2','receive'],['match3','attack'],['match4','block']];let pairCorrect=0;pairs.forEach(([k,v])=>{if(d.get(k)===v)pairCorrect++});score+=pairCorrect*10;state.quizScore=String(score);state.lastScore=String(score);state.visited.kuis=true;localStorage.setItem('mpiQuizScore',score);localStorage.setItem('mpiLastScore',score);saveState();$('#lastScore').textContent=score;const msg=score>=80?'Hebat! Pemahamanmu sudah kuat.':score>=60?'Cukup baik. Tinjau kembali fungsi teknik yang masih tertukar.':'Jadikan hasil ini petunjuk untuk belajar kembali, bukan alasan menyerah.';$('#quizResult').innerHTML=`<div class="card" style="margin-top:14px"><h3>Hasil kuis</h3><div class="resultbig">${score}<span style="font-size:1rem">/100</span></div><p>${msg}</p><p>Soal 1: ${q1?'Benar':'Perlu ditinjau'} · Soal 2: ${q2?'Benar':'Perlu ditinjau'} · Pasangan benar: ${pairCorrect}/4</p><button class="btn" onclick="go('akhir')">Lanjut asesmen akhir →</button></div>`});
+$('#formAkhir').addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);const keys=['f1','f2','f3'],ans=['b','b','a'];let score=0;keys.forEach((k,i)=>{if(d.get(k)===ans[i])score++});localStorage.setItem('mpiAkhirScore',score);state.visited.akhir=true;saveState();$('#finalResult').innerHTML=`<div class="card" style="margin-top:14px"><h3>Hasil asesmen akhir</h3><div class="resultbig">${score*100/3|0}<span style="font-size:1rem">/100</span></div><p>${score===3?'Sangat baik! Kamu mampu memilih teknik dan mempertimbangkan keselamatan.':score===2?'Baik. Tinjau kembali satu situasi yang belum tepat.':'Pelajari kembali materi dan diskusikan jawaban dengan guru.'}</p><button class="btn" onclick="go('refleksi')">Lanjut refleksi →</button></div>`});
+$('#saveReflection').onclick=()=>{const obj={r1:$('#reflect1').value,r2:$('#reflect2').value,r3:$('#reflect3').value,r4:$('#reflect4').value};if(!Object.values(obj).some(x=>x.trim())){$('#reflectionFeedback').innerHTML='<div class="feedback incorrect">Isi minimal satu jawaban refleksi.</div>';return}localStorage.setItem('mpiReflection',JSON.stringify(obj));state.visited.refleksi=true;saveState();$('#reflectionFeedback').innerHTML='<div class="feedback correct">Refleksi tersimpan di perangkat ini. Terima kasih sudah mengevaluasi proses belajarmu.</div>'};
+$('#printReport').onclick=()=>window.print();
+$('#resetAll').onclick=()=>{if(confirm('Hapus seluruh progres dan jawaban yang tersimpan di perangkat ini?')){['mpiVisited','mpiMateriDone','mpiLabDone','mpiApersepsi','mpiAwalScore','mpiQuizScore','mpiLastScore','mpiAkhirScore','mpiReflection'].forEach(k=>localStorage.removeItem(k));location.reload()}};
+$('#resetAwal').onclick=()=>$('#awalResult').innerHTML='';
+if(localStorage.getItem('mpiApersepsi'))$('#apAnswer').value=localStorage.getItem('mpiApersepsi');
+if(localStorage.getItem('mpiReflection')){try{const r=JSON.parse(localStorage.getItem('mpiReflection'));$('#reflect1').value=r.r1||'';$('#reflect2').value=r.r2||'';$('#reflect3').value=r.r3||'';$('#reflect4').value=r.r4||''}catch(e){}}
+updateProgress();
+</script>
+</body>
+</html>
